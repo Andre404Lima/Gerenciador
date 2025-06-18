@@ -1,103 +1,155 @@
-# 🗂️ Sistema de Enquetes Django
+# 🗂️ Gerenciador de Projetos
 
-Sistema web para criação e gerenciamento de enquetes, desenvolvido em **Python + Django**. Permite criar perguntas com múltiplas opções, controlar data de encerramento das enquetes e gerenciar votos via painel administrativo do Django.
+Sistema de gerenciamento de projetos desenvolvido em **Python + Flask**, com banco de dados **MySQL**, que permite cadastrar projetos, ambientes, materiais e mobiliários. Suporte a múltiplos usuários, com autenticação e gerenciamento completo via **API RESTful**.
 
 ---
 
 ## 🚀 Tecnologias Utilizadas
-- **Backend:** Python, Django
-- **Banco de Dados:** SQLite (padrão) / PostgreSQL (opcional)
-- **Admin:** Django Admin para gerenciamento das enquetes
+- **Backend:** Python, Flask, Flask-CORS
+- **Banco de Dados:** MySQL
+- **Segurança:** Bcrypt para hash de senhas
+- **Arquitetura:** RESTful + Blueprints (modular)
 
 ---
 
 ## 🏗️ Funcionalidades
-- ✅ Cadastro e edição de enquetes via painel administrativo  
-- ✅ Adição de múltiplas opções para cada enquete  
-- ✅ Controle de data de encerramento para bloquear votos  
-- ✅ Visualização de status das enquetes (aberta/encerrada)  
+- ✅ Autenticação de usuários (login e cadastro)
+- ✅ Criação e gerenciamento de projetos
+- ✅ Adição de membros aos projetos
+- ✅ Gerenciamento de ambientes dentro dos projetos
+- ✅ Cadastro de materiais e mobiliários para cada ambiente
+- ✅ Operações completas de CRUD:
+  - Projetos
+  - Ambientes
+  - Materiais
+  - Mobiliários
+- ✅ Validação de dados e segurança nas operações
+
+---
+
+## 🛠️ Melhorias aplicadas
+- ✅ Resolvido o problema de N+1 queries na rota de projetos
 
 ---
 
 ## 🚀 Futuras melhorias
-- 🚧 Implementar interface web pública para votação  
-- 🚧 Criar página de resultados das enquetes  
-- 🚧 Adicionar autenticação de usuários comuns  
-- 🚧 Melhorar interface com CSS e frameworks front-end  
-- 🚧 Migrar banco para PostgreSQL para ambiente de produção  
-- 🚧 Implementar testes automatizados  
+- 🚧 Integração com frontend (React, Vue ou outro)
+- 🚧 Deploy na nuvem (Render)
+- 🚧 Implementação de autenticação via JWT
+- 🚧 Logs e tratamento de erros mais robusto
+- 🚧 Testes automatizados
 
 ---
 
 ## 📦 Estrutura do Projeto
 
-sistema_enquetes/
+gerenciador/
 
-├── enquete/ # Aplicação Django para gerenciar enquetes  
-│   ├── admin.py # Configuração do painel administrativo  
-│   ├── models.py # Modelos Enquete e Opcao  
-│   ├── views.py # Views (a implementar)  
-│   ├── migrations/ # Migrações do banco de dados  
-│   └── templates/ # Templates HTML (a implementar)  
+├── main.py # Arquivo principal para iniciar a aplicação
 
-├── sistema_enquetes/ # Configurações do projeto Django  
-│   ├── settings.py  
-│   ├── urls.py  
-│   └── wsgi.py  
+├── db_config.py # Configuração e conexão com o banco de dados
 
-├── manage.py # Script para executar comandos Django  
+├── blueprints/ # Rotas organizadas em blueprints
 
-└── venv/ # Ambiente virtual Python  
+│ ├── init.py
+
+│ ├── login.py # Rotas relacionadas a login e autenticação
+
+│ ├── materiais.py # Rotas para gerenciamento de materiais
+
+│ ├── mobiliarios.py # Rotas para gerenciamento de mobiliários
+
+│ ├── projetos.py # Rotas para gerenciamento de projetos
+
+│ └── usuarios.py # Rotas para gerenciamento de usuários
+
+├── imagens/ # Diretório para armazenar imagens dos materiais
+
+└── requirements.txt # Dependências do projeto
+
+---
+
+## 🔗 Principais Rotas da API
+
+### 🔐 Autenticação
+| Método | Endpoint   | Descrição           |
+|--------|------------|---------------------|
+| POST   | /cadastro  | Cadastro de usuário |
+| POST   | /login     | Login de usuário    |
+
+### 📁 Projetos
+| Método | Endpoint        | Descrição            |
+|--------|-----------------|----------------------|
+| GET    | /projetos       | Listar todos         |
+| POST   | /projetos       | Criar novo           |
+| PUT    | /projetos/:id   | Atualizar projeto    |
+| DELETE | /projetos/:id   | Deletar projeto      |
+
+### 🏢 Ambientes
+| Método | Endpoint         | Descrição            |
+|--------|------------------|----------------------|
+| GET    | /ambientes       | Listar ambientes     |
+| POST   | /ambientes       | Criar ambiente       |
+| PUT    | /ambientes/:id   | Atualizar ambiente   |
+| DELETE | /ambientes/:id   | Deletar ambiente     |
+
+### 🏗️ Materiais
+| Método | Endpoint          | Descrição            |
+|--------|-------------------|----------------------|
+| GET    | /materiais        | Listar materiais     |
+| POST   | /materiais        | Criar material       |
+| PUT    | /materiais/:id    | Atualizar material   |
+| DELETE | /materiais/:id    | Deletar material     |
+
+### 🪑 Mobiliários
+| Método | Endpoint           | Descrição              |
+|--------|--------------------|------------------------|
+| GET    | /mobiliarios       | Listar mobiliários     |
+| POST   | /mobiliarios       | Criar mobiliário       |
+| PUT    | /mobiliarios/:id   | Atualizar mobiliário   |
+| DELETE | /mobiliarios/:id   | Deletar mobiliário     |
 
 ---
 
 ## 🔧 Como rodar o projeto localmente
 
-1️⃣ Clone o repositório  
-```bash
-git clone <URL_DO_REPOSITORIO>
-cd sistema_enquetes
-2️⃣ Crie e ative o ambiente virtual
+🔧 Como rodar o projeto localmente
 
+1️⃣ Clone o repositório
+git clone https://github.com/seu-usuario/gerenciador.git
+cd gerenciador
+
+2️⃣ Crie e ative um ambiente virtual
 bash
 Copiar
 Editar
 python -m venv venv
-# Windows
-.\venv\Scripts\Activate.ps1
-# Linux/macOS
-source venv/bin/activate
+source venv/bin/activate  # Linux/macOS
+venv\Scripts\activate     # Windows
+
 3️⃣ Instale as dependências
-
 bash
 Copiar
 Editar
-pip install django
-4️⃣ (Opcional) Configure banco PostgreSQL em sistema_enquetes/settings.py
+pip install -r requirements.txt
 
-5️⃣ Execute as migrações
+4️⃣ Configure o banco de dados
+Crie um banco de dados MySQL chamado gerenciador.
 
+Configure as credenciais no arquivo db_config.py.
+
+5️⃣ Execute o projeto
 bash
 Copiar
 Editar
-python manage.py migrate
-6️⃣ Crie um superusuário para acessar o admin
+python main.py
+O servidor estará rodando em:
+➡️ http://localhost:5000
 
-bash
-Copiar
-Editar
-python manage.py createsuperuser
-7️⃣ Inicie o servidor de desenvolvimento
-
-bash
-Copiar
-Editar
-python manage.py runserver
-8️⃣ Acesse o painel administrativo
-http://127.0.0.1:8000/admin/
+---
 
 👨‍💻 Desenvolvido por
 Andre Lima
-LinkedIn: André Crisóstomo Nobre Lima
+ LinkedIn: André Crisóstomo Nobre Lima 
 
 
